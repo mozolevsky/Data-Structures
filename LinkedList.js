@@ -37,23 +37,53 @@ LinkedList.prototype.addToTail = function (value) {
   this.tail = createdNode;
 }
 
-LinkedList.prototype.removeFromHead = function() {
+LinkedList.prototype.removeHead = function() {
   if (!this.head) return null;
   
-  if (this.head.next) {
-      this.head = this.head.next;
+  this.head = this.head.next;
+
+  if (this.head) {
       this.head.prev = null;
   } else {
       this.tail = null;
   }
+}
+
+LinkedList.prototype.removeTail = function() {
+  if (!this.tail) return null;
   
+  this.tail = this.tail.prev;
+  
+  if (this.tail) {
+    this.tail.next = null;
+  } else {
+    this.head = null;
+  }
+}
+
+LinkedList.prototype.search = function(value) {
+  if (!this.head) return null;
+  
+  let crawler = this.head;
+  
+  while (crawler) {
+    if (crawler.value === value) {
+      return crawler.value;
+    }
+    
+    crawler = crawler.next;
+  }
+  
+  return 'Not found';
 }
 
 
 let LL = new LinkedList();
 
-LL.addToTail(10);
-LL.addToTail(9);
-LL.removeFromHead();
+LL.addToTail('one');
+LL.addToTail('two');
+LL.addToTail('three');
+LL.addToHead('four');
 
-console.log(LL);
+
+console.log(LL.search('three'));
