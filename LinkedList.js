@@ -77,13 +77,21 @@ LinkedList.prototype.search = function(value) {
   return 'Not found';
 }
 
-
-let LL = new LinkedList();
-
-LL.addToTail('one');
-LL.addToTail('two');
-LL.addToTail('three');
-LL.addToHead('four');
-
-
-console.log(LL.search('three'));
+LinkedList.prototype.indexOf = function(value) {
+  if (!this.head) return null;
+  
+  let crawler = this.head;
+  let currentIndex = 0;
+  let indexes = [];
+  
+  while (crawler) {
+    if (crawler.value === value) {
+      indexes.push(currentIndex);
+    }
+    
+    crawler = crawler.next;
+    currentIndex++;
+  }
+  
+  return indexes;
+}
