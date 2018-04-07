@@ -54,6 +54,81 @@ BST.prototype.contains = function(value) {
     }
   }
 }
+
+let log = val => console.log(val);
+
+BST.prototype.depthFirstTraversal = function(iterator, order) {
   
-bst1.contains(120);
+  if (order === 'pre-order') {
+    iterator(this.value);
+  }
+
+  if (this.left) {
+    this.left.depthFirstTraversal(iterator, order);
+  }
+  
+  if (order === 'in-order') {
+    iterator(this.value);
+  }
+  
+  if (this.right) {
+    this.right.depthFirstTraversal(iterator, order);
+  }
+  
+  if (order === 'post-order') {
+    iterator(this.value);
+  }
+}
+
+BST.prototype.breadthFirstTraversal = function(iteratorFunc) {
+  let queue = [this];
+
+  while (queue.length) {
+    let threeNode = queue.shift();
+    iteratorFunc(threeNode);
+
+    if (threeNode.left) {
+      queue.push(threeNode.left);
+    }
+    
+    if (threeNode.right) {
+      queue.push(threeNode.right);
+    }
+  }
+}
+
+BST.prototype.getExtremeValue = function(extremeTitle = 'min') {
+  let queue = [this];
+  let values = [];
+
+  while(queue.length) {
+    let node = queue.shift();
+    values.push(node.value);
+    
+    if (node.left) {
+      queue.push(node.left);
+    }
+    
+    if (node.right) {
+      queue.push(node.right);
+    }
+  }
+  
+  let resultValue = this.value;
+  values.forEach(val => {
+
+    if (extremeTitle === 'min') {
+      return val < resultValue ? resultValue = val : resultValue;
+    }
+    
+    if (extremeTitle === 'max') {
+      return val > resultValue ? resultValue = val : resultValue;
+    }
+    
+  });
+  
+  return resultValue ;
+}
+
+
   
